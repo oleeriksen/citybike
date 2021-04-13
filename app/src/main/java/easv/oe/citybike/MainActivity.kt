@@ -7,14 +7,14 @@ import android.text.TextWatcher
 import android.widget.ArrayAdapter
 import android.widget.ListAdapter
 import easv.oe.citybike.data.*
-import kotlinx.android.synthetic.main.activity_filter.*
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
     val mRepo = StationRepo()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_filter)
+        setContentView(R.layout.activity_main)
 
         mRepo.getAll(object:ICallback{
             override fun onStationsReady(stations: List<BEStation>) {

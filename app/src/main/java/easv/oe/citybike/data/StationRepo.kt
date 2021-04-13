@@ -13,9 +13,10 @@ class StationRepo {
 
     val TAG = "xyz"
 
-    val url = "http://feeds.citibikenyc.com/stations/stations.json"
+    private val url = "http://feeds.citibikenyc.com/stations/stations.json"
 
-    val httpClient: AsyncHttpClient = AsyncHttpClient()
+    private val httpClient: AsyncHttpClient = AsyncHttpClient()
+
 
     fun getAll(callback: ICallback){
 
@@ -25,7 +26,8 @@ class StationRepo {
                 headers: Array<out Header>?,
                 responseBody: ByteArray?
             ) {
-                callback.onStationsReady(getStationsFromString( String(responseBody!!) ) )
+                val stations = getStationsFromString( String(responseBody!!) )
+                callback.onStationsReady( stations )
             }
 
             override fun onFailure(
