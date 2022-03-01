@@ -19,7 +19,7 @@ class StationRepo {
 
 
     fun getAll(callback: ICallback){
-
+        
         httpClient.get(url, object : AsyncHttpResponseHandler() {
             override fun onSuccess(
                 statusCode: Int,
