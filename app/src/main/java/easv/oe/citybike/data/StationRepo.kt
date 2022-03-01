@@ -13,7 +13,7 @@ class StationRepo {
 
     val TAG = "xyz"
 
-    private val url = "http://feeds.citibikenyc.com/stations/stations.json"
+    private val url = "https://gbfs.citibikenyc.com/gbfs/en/station_information.json"
 
     private val httpClient: AsyncHttpClient = AsyncHttpClient()
 
@@ -56,8 +56,8 @@ class StationRepo {
         var all: JSONObject?
         var array: JSONArray?
         try {
-            all = JSONObject(jsonString)
-            array = all.getJSONArray("stationBeanList")
+            all = JSONObject(jsonString).getJSONObject("data")
+            array = all.getJSONArray("stations")
             for (i in 0 until array.length()) {
                 result.add(BEStation(array.getJSONObject(i)))
             }
