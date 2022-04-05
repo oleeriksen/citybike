@@ -18,7 +18,6 @@ class StationRepo {
 
     private val httpClient: AsyncHttpClient = AsyncHttpClient()
 
-
     fun getAll(callback: ICallback){
         
         httpClient.get(url, object : AsyncHttpResponseHandler() {
