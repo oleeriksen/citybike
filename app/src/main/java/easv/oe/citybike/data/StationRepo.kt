@@ -13,6 +13,7 @@ class StationRepo {
 
     val TAG = "xyz"
 
+    // see https://citibikenyc.com/homepage
     private val url = "https://gbfs.citibikenyc.com/gbfs/en/station_information.json"
 
     private val httpClient: AsyncHttpClient = AsyncHttpClient()
