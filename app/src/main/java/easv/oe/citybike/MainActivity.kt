@@ -6,6 +6,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.widget.ArrayAdapter
 import android.widget.ListAdapter
+import androidx.core.widget.doOnTextChanged
 import easv.oe.citybike.data.*
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -23,7 +24,16 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
-        etFilter.addTextChangedListener(object: TextWatcher {
+        etFilter.doOnTextChanged { text, start, before, count -> mRepo.getAll(object:ICallback{
+            override fun onStationsReady(stations: List<BEStation>) {
+                val filter = text.toString()
+                val filteredStations = stations.filter {station -> station.name.contains(filter)}
+                setupListView(filteredStations)
+                tvCount.text = filteredStations.size.toString()
+            }
+        }) }
+
+        /*etFilter.addTextChangedListener(object: TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
@@ -39,7 +49,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun afterTextChanged(p0: Editable?) {}
-        })
+        })*/
 
 
     }
