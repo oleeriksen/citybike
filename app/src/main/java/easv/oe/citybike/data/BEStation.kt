@@ -7,4 +7,8 @@ class BEStation(val id: Int, val name: String) {
     constructor(jsonObject: JSONObject) :
             this(Integer.parseInt(jsonObject["station_id"] as String),
                  jsonObject["name"] as String)
+
+    public override fun toString(): String {
+        return "${id}, ${name}"
+    }
 }

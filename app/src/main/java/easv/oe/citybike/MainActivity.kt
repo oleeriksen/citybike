@@ -2,8 +2,7 @@ package easv.oe.citybike
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
+import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.ListAdapter
 import androidx.core.widget.doOnTextChanged
@@ -11,6 +10,10 @@ import easv.oe.citybike.data.*
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
+
+    companion object {
+        val TAG = "xyz"
+    }
 
     val mRepo = StationRepo()
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,34 +36,18 @@ class MainActivity : AppCompatActivity() {
             }
         }) }
 
-        /*etFilter.addTextChangedListener(object: TextWatcher {
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
-
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                mRepo.getAll(object:ICallback{
-                    override fun onStationsReady(stations: List<BEStation>) {
-                        val filter = p0.toString()
-                        val filteredStations = stations.filter {station -> station.name.contains(filter)}
-                        setupListView(filteredStations)
-                        tvCount.text = filteredStations.size.toString()
-                    }
-                })
-
-            }
-
-            override fun afterTextChanged(p0: Editable?) {}
-        })*/
-
-
+        Log.d(TAG, "onCreate done")
     }
 
     fun setupListView(stations: List<BEStation>) {
-        val asStrings = stations.map { s -> "${s.id}, ${s.name}"}
+
         val adapter: ListAdapter = ArrayAdapter(
             this,
             android.R.layout.simple_list_item_1,
-            asStrings.toTypedArray()
+            stations
         )
         lvStations.adapter = adapter
+
+        Log.d(TAG, "Listview adapter created with ${stations.size} stations")
     }
 }

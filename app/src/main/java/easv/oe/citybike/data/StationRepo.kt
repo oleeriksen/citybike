@@ -4,6 +4,7 @@ import android.util.Log
 import com.loopj.android.http.AsyncHttpClient
 import com.loopj.android.http.AsyncHttpResponseHandler
 import cz.msebera.android.httpclient.Header
+import easv.oe.citybike.MainActivity
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
@@ -11,15 +12,13 @@ import org.json.JSONObject
 
 class StationRepo {
 
-    val TAG = "xyz"
-
     // see https://citibikenyc.com/homepage
     private val url = "https://gbfs.citibikenyc.com/gbfs/en/station_information.json"
 
     private val httpClient: AsyncHttpClient = AsyncHttpClient()
 
+
     fun getAll(callback: ICallback){
-        
         httpClient.get(url, object : AsyncHttpResponseHandler() {
             override fun onSuccess(
                 statusCode: Int,
@@ -27,6 +26,7 @@ class StationRepo {
                 responseBody: ByteArray?
             ) {
                 val stations = getStationsFromString( String(responseBody!!) )
+                Log.d(MainActivity.TAG, "Stations received - ${stations.size}")
                 callback.onStationsReady( stations )
             }
 
@@ -36,7 +36,7 @@ class StationRepo {
                 responseBody: ByteArray?,
                 error: Throwable?
             ) {
-                Log.d(TAG, "failure in getAll statusCode = $statusCode")
+                Log.d(MainActivity.TAG, "failure in getAll statusCode = $statusCode")
             }
 
         })
@@ -46,18 +46,16 @@ class StationRepo {
         val result = ArrayList<BEStation>()
 
         if (jsonString!!.startsWith("error")) {
-            Log.d(TAG, "Error: $jsonString")
+            Log.d(MainActivity.TAG, "Error: $jsonString")
             return result
         }
         if (jsonString == null) {
-            Log.d(TAG, "Error: NO RESULT")
+            Log.d(MainActivity.TAG, "Error: NO RESULT")
             return result
         }
-        var all: JSONObject?
         var array: JSONArray?
         try {
-            all = JSONObject(jsonString).getJSONObject("data")
-            array = all.getJSONArray("stations")
+            array = JSONObject(jsonString).getJSONObject("data").getJSONArray("stations")
             for (i in 0 until array.length()) {
                 result.add(BEStation(array.getJSONObject(i)))
             }
