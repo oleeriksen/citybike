@@ -15,7 +15,7 @@ class MainActivity : AppCompatActivity() {
         val TAG = "xyz"
     }
 
-    val mRepo = StationRepo()
+    val mRepo = StationRepoRetrofit()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
